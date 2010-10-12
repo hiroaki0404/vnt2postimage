@@ -2,6 +2,7 @@
 
 require 'win32ole'
 require 'kconv'
+require 'jcode'
 require 'net/smtp'
 require 'vr/vruby'
 require 'vr/vrcontrol'
@@ -16,8 +17,9 @@ $WATCHDIR = ''
 
 AGENT = "vnt2postimage.rb/ruby/#{RUBY_VERSION}"
 DEFAULTHOST = 'localhost'
+DEFAULTSMTPPORT = 25
 
-wsh = WIN32OLE.new('Wscript.Shell')
+$wsh = WIN32OLE.new('Wscript.Shell')
 
 
 module Frm_form1
@@ -27,10 +29,10 @@ module Frm_form1
       @screen.factory.newfont('MS UI Gothic',-16,0,4,0,0,0,50,128)
     ]
     self.caption = 'vnt2PostImage 設定'
-    self.move(140,124,464,224)
+    self.move(140,124,464,360)
     label_x = 8
-    edit_x = 180
-    edit_w = 168
+    edit_x = 160
+    edit_w = 280
     y = 12
     addControl(VRStatic,'static1',"あなたのメールアドレス",label_x,y,176,24,1342177280)
     @static1.setFont($_form1_fonts[0])
@@ -44,9 +46,26 @@ module Frm_form1
     @static4.setFont($_form1_fonts[0])
     addControl(VREdit,'edit4',$HOST,edit_x,y-2,edit_w,24,1342177408)
     y += 32
+    addControl(VRStatic,'static8',"SMTP Port",label_x,y,176,24,1342177280)
+    @static8.setFont($_form1_fonts[0])
+    addControl(VREdit,'edit8',$SMTPPORT,edit_x,y-2,40,24,1342177408)
+    y += 32
+    addControl(VRStatic,'static5',"認証",label_x+30,y,176,24,1342177280)
+    @static5.setFont($_form1_fonts[0])
+    addControl(VRCheckbox,'checkBox1',"checkBox1",edit_x,y,16,16,1342177283)
+    y += 32
+    addControl(VRStatic,'static6',"送信ユーザ名",label_x+30,y,176,24,1342177280)
+    @static6.setFont($_form1_fonts[0])
+    addControl(VREdit,'edit6',$SMTPUSER,edit_x,y-2,edit_w,24,1342177408)
+    y += 32
+    addControl(VRStatic,'static7',"送信パスワード",label_x+30,y,176,24,1342177280)
+    @static7.setFont($_form1_fonts[0])
+    addControl(VREdit,'edit7',$SMTPPASS,edit_x,y-2,edit_w,24,1342177440)
+    y += 32
     addControl(VRStatic,'static3',"監視フォルダ",label_x,y,176,24,1342177280)
     @static3.setFont($_form1_fonts[0])
-    addControl(VREdit,'edit3',$WATCHDIR,edit_x,y-2,edit_w,24,1342177408)
+    addControl(VREdit,'edit3',$WATCHDIR,edit_x,y-2,edit_w-100,24,1342177408)
+    addControl(VRButton,'button3',"参照",354,y-2,80,24,1342177280)
     y += 45
     addControl(VRButton,'button1',"OK",93,y,80,24,1342177280)
     addControl(VRButton,'button2',"Cancel",266,y,80,24,1342177280)
@@ -56,7 +75,11 @@ module Frm_form1
     $ini.write("vnt2postimage", "HOST", @edit4.text)
     $ini.write("vnt2postimage", "FROMADDRESS", @edit1.text)
     $ini.write("vnt2postimage", "POSTADDRESS", @edit2.text)
-    $ini.write("vnt2postimage", "WATCHDIR", @edit3.text)
+    $ini.write("vnt2postimage", "WATCHDIR", @edit3.text.gsub(/\\/, '/'))
+    $ini.write("vnt2postimage", "SMTPUSER", @edit6.text)
+    $ini.write("vnt2postimage", "SMTPPASS", @edit7.text)
+    $ini.write("vnt2postimage", "SMTPPORT", @edit8.text)
+    $ini.write("vnt2postimage", "SMTPAUTH", @checkBox1.checked?)
     $ini.flash()
     close
   end
@@ -65,8 +88,28 @@ module Frm_form1
     close
   end
 
+  def button3_clicked
+    app =  WIN32OLE.new('Shell.Application')
+    path = app.BrowseForFolder(0, 'フォルダを選択してください', 0, '.')
+    if (!path.nil?)
+      @edit3.text = path.Items.Item.path
+    end
+  end
+
+  def checkBox1_clicked
+    if (@checkBox1.checked?)
+      @edit6.readonly = false
+      @edit7.readonly = false
+  else
+      @edit6.readonly = true
+      @edit7.readonly = true
+    end
+  end
+
   def construct
     _form1_init
+    @checkBox1.check($SMTPAUTH)
+    checkBox1_clicked
   end
 
 end
@@ -86,9 +129,23 @@ def postImage(subject, image, filename, ext)
   body.concat(image)
   body.concat("\r\n")
 
-  Net::SMTP.start($HOST, 25) {|smtp|
-    smtp.send_mail body, $FROMADDRESS, $POSTADDRESS
-  }
+  if (!$SMTPAUTH)
+    $SMTPAUTH = nil
+    $SMTPPASS = nil
+    $SMTPUSER = nil
+    authtype = nil
+  else
+    authtype = ':plain'
+  end
+
+  begin
+    Net::SMTP.start($HOST, $SMTPPORT ,account=$SMTPUSER, password=$SMTPPASS, authtype=authtype ) {|smtp|
+      smtp.send_mail body, $FROMADDRESS, $POSTADDRESS
+    }
+  rescue
+    $wsh.Popup("Faild to send mail")
+    false
+  end
 end #end of def
 
 def decodeVNT(filename)
@@ -97,14 +154,14 @@ def decodeVNT(filename)
   open(filename) {|f|
     line = f.read
     if (isBody)
-	  image += line
+	    image += line
   	else
   	  if (line =~ /^X-DOCOMO-TYPE:(.+)$/)
   	  	orgExt = $1
   	  elsif (line =~ /^X-DOCOMO-FILENAME:(.+)$/)
   	  	orgFilename = $1
-  	  elsif (line =~ /^X-DOCOMO-BODY;ENCODING=BASE64:/)
-  	  	body = ""
+  	  elsif (line =~ /^X-DOCOMO-BODY;ENCODING=BASE64:(.+)$/)
+  	  	body = $1
   	  	isBody = true
   	  elsif (line.length == 0|| line =~ /^END:VNOTE/)
   	  	isBody = false
@@ -123,7 +180,7 @@ begin
   raise RuntimeError if getdir.call(0, CSIDL_LOCAL_APPDATA, 0, 0, windir) != 0
   windir = File.expand_path(windir.rstrip.chop)
 rescue
-  wsh.Popup('設定ファイルのあるディレクトリが見つかりません。代わりのディレクトリを使用します。')
+  $wsh.Popup('設定ファイルのあるディレクトリが見つかりません。代わりのディレクトリを使用します。')
   windir = "."
 end
 conf_file = "#{windir}/vnt2postimage.cnf"
@@ -132,9 +189,16 @@ $HOST = $ini.read("vnt2postimage", "HOST")
 $FROMADDRESS = $ini.read("vnt2postimage", "FROMADDRESS")
 $POSTADDRESS = $ini.read("vnt2postimage", "POSTADDRESS")
 $WATCHDIR = $ini.read("vnt2postimage", "WATCHDIR")
+$SMTPUSER = $ini.read("vnt2postimage", "SMTPUSER")
+$SMTPPASS = $ini.read("vnt2postimage", "SMTPPASS")
+$SMTPPORT = $ini.read("vnt2postimage", "SMTPPORT")
+$SMTPAUTH = ("true" ==  $ini.read("vnt2postimage", "SMTPAUTH"))
 
 if $HOST.nil? || $HOST == ''
   $HOST = DEFAULTHOST
+end
+if $SMTPPORT.nil? || $SMTPPORT == ''
+  $SMTPPORT = DEFAULTSMTPPORT
 end
 
 if $FROMADDRESS.nil? || $FROMADDRESS == '' ||
@@ -144,7 +208,7 @@ if $FROMADDRESS.nil? || $FROMADDRESS == '' ||
     exit
 end
 
-Dir.glob($WATCHDIR + "/*.vnt") {|f|
+Dir.glob($WATCHDIR + '/*.vnt') {|f|
   if (decodeVNT(f))
   	File.unlink(f)
   end
