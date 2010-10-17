@@ -8,7 +8,7 @@ vnt2PostImage(ˆÈ‰ºA–{ƒ\ƒtƒgƒEƒFƒA)‚ÍAŒg‘Ñ“d˜b‚ÌÔŠOü‘—M‹@”\‚Å‘—M‚³‚ê‚½‰æ‘œƒ
 Windows XP/Vista/Windows7 (‚»‚ê‚¼‚êA64bitŠÂ‹«‚Í–¢Šm”F)
 
 ›Žg—p•û–@
-mƒXƒ^[ƒgƒƒjƒ…[n¨mvnt2PostImagen¨mvnt2PostiIagen‚ð‘I‘ð‚·‚é‚ÆAÝ’è“à—e‚É]‚Á‚ÄuŠÄŽ‹ƒtƒHƒ‹ƒ_v‚ÉŽw’è‚µ‚½ƒtƒHƒ‹ƒ_‚Ìƒtƒ@ƒCƒ‹‚ðƒ`ƒFƒbƒN‚µAvntƒtƒ@ƒCƒ‹‚Å‚ ‚ê‚Îƒ[ƒ‹‘—M‚µ‚½ŒãAíœ‚µ‚Ü‚·BƒGƒ‰[‚ª”­¶‚µ‚È‚¢ŒÀ‚èA‰æ–Ê‚Í•\Ž¦‚³‚ê‚Ü‚¹‚ñB
+mƒXƒ^[ƒgƒƒjƒ…[n¨mvnt2PostImagen¨mvnt2PostImagen‚ð‘I‘ð‚·‚é‚ÆAÝ’è“à—e‚É]‚Á‚ÄuŠÄŽ‹ƒtƒHƒ‹ƒ_v‚ÉŽw’è‚µ‚½ƒtƒHƒ‹ƒ_‚Ìƒtƒ@ƒCƒ‹‚ðƒ`ƒFƒbƒN‚µAvntƒtƒ@ƒCƒ‹‚Å‚ ‚ê‚Îƒ[ƒ‹‘—M‚µ‚½ŒãAíœ‚µ‚Ü‚·BƒGƒ‰[‚ª”­¶‚µ‚È‚¢ŒÀ‚èA‰æ–Ê‚Í•\Ž¦‚³‚ê‚Ü‚¹‚ñB
 Ý’è‚ðs‚Á‚Ä‚¢‚È‚¢ê‡AÝ’è‰æ–Ê‚ªŠJ‚«‚Ü‚·B‚¨Žg‚¢‚Ìƒ[ƒ‹ƒ\ƒtƒg‚ÌÝ’è‚ðŽQl‚ÉAƒ[ƒ‹‘—M‚Ì‚½‚ß‚Ì€–Ú‚ð“ü—Í‚µ‚Ü‚·B
 uŠÄŽ‹ƒtƒHƒ‹ƒ_v‚É‚ÍAÔŠOü‚ÅŽóM‚µ‚½ƒtƒ@ƒCƒ‹‚ð•Û‘¶‚·‚éƒtƒHƒ‹ƒ_‚ðŽw’è‚µ‚Ü‚·B
 EWindows XP‚Å‚ ‚ê‚ÎAmƒXƒ^[ƒgƒƒjƒ…[n¨mƒRƒ“ƒgƒ[ƒ‹ƒpƒlƒ‹n¨mƒvƒŠƒ“ƒ^‚Æ‚»‚Ì‘¼‚Ìƒn[ƒhƒEƒFƒAn¨mƒƒCƒ„ƒŒƒXƒŠƒ“ƒNn‚ÌuŽóM‚µ‚½ƒtƒ@ƒCƒ‹‚ÌŠù’è‚Ì•Û‘¶æv‚É‚µ‚Ü‚·B
