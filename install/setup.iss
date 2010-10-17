@@ -34,6 +34,7 @@ Source: "C:\src\vnt2postimage\doc\readme.txt"; DestDir: "{app}"; Flags: ignoreve
 
 [Icons]
 Name: "{group}\vnt2PostImage"; Filename: "{app}\vnt2postimage.exe"
+Name: "{group}\vnt2PostImage ê›íË"; Filename: "{app}\vnt2postimage.exe";  Parameters: "/s"
 Name: "{group}\Ç®ì«Ç›Ç≠ÇæÇ≥Ç¢"; Filename: "{app}\readme.txt"
 Name: "{group}\{cm:UninstallProgram,vnt2PostImage}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\vnt2PostImage"; Filename: "{app}\vnt2postimage.exe"; Tasks: desktopicon
@@ -43,5 +44,6 @@ Filename: "{app}\vnt2postimage.exe"; Description: "{cm:LaunchProgram,vnt2PostIma
 
 [UninstallRun]
 Filename: "{app}\vnt2postimage.exe"; Parameters: "/d"
+
 
 
