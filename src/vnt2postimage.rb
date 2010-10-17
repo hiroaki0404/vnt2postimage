@@ -174,6 +174,9 @@ def decodeVNT(filename)
       end
   	end
   }
+  if (orgFilename == "" || image == "" || orgExt == "" || isBody)
+  	return false
+  end
   postImage(orgFilename, image, orgFilename, orgExt)
 end
 
@@ -207,6 +210,14 @@ if $SMTPPORT.nil? || $SMTPPORT == ''
   $SMTPPORT = DEFAULTSMTPPORT
 end
 
+if ARGV[0] =~ /[-\/]d/
+  begin
+	File.unlink(conf_file)
+  rescue
+  end
+  exit
+end
+
 if $FROMADDRESS.nil? || $FROMADDRESS == '' ||
   $POSTADDRESS.nil? || $POSTADDRESS == '' || $WATCHDIR.nil? || $WATCHDIR == '' ||
   ARGV[0] =~ /[-\/]s/
@@ -214,7 +225,7 @@ if $FROMADDRESS.nil? || $FROMADDRESS == '' ||
     exit
 end
 
-Dir.glob($WATCHDIR + '/*.vnt') {|f|
+Dir.glob($WATCHDIR + '/*.*') {|f|
   if (decodeVNT(f))
   	File.unlink(f)
   end
