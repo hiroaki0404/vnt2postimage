@@ -216,5 +216,6 @@ end
 
 Dir.glob($WATCHDIR + '/*.vnt') {|f|
   if (decodeVNT(f))
+  	File.unlink(f)
   end
 }
