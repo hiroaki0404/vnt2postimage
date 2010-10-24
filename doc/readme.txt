@@ -1,4 +1,4 @@
-vnt2PostImage 1.0
+vnt2PostImage 1.1
 Copyright (c) 2010, Hiroaki Abe	http://www.home.group.jp/hiroaki/vnt2PostImage/
 
 ○はじめに
@@ -17,6 +17,10 @@ Windows XP/Vista/Windows7 (それぞれ、64bit環境は未確認)
 ○注意事項
 設定内容はそのまま(暗号化されずに) C:\Documents and Settings\[Windowsのログオンユーザ名]\Local Settings\Application Data\vnt2postimage.conf に保存されます。
 Docomo SH906iから送信した画像ファイルで確認しています。他の機種・キャリアでの動作は不明です。
+
+○更新履歴
+1.0→1.1
+・フォト蔵に登録できない問題を修正しました。
 
 ○その他
 本ソフトウェアはRubyで書かれ、Exerbにてexe化しています。

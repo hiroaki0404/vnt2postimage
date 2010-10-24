@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{B60CA30D-9F9E-4E2D-A594-99BCEA08E847}
 AppName=vnt2PostImage
-AppVerName=vnt2PostImage 1.0
+AppVerName=vnt2PostImage 1.1
 AppPublisher=Hiroaki Abe
 AppPublisherURL=http://www.home.group.jp/hiroaki/vnt2PostImage/
 AppSupportURL=http://www.home.group.jp/hiroaki/vnt2PostImage/
@@ -44,6 +44,7 @@ Filename: "{app}\vnt2postimage.exe"; Description: "{cm:LaunchProgram,vnt2PostIma
 
 [UninstallRun]
 Filename: "{app}\vnt2postimage.exe"; Parameters: "/d"
+
 
 
 
