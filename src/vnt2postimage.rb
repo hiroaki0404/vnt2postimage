@@ -177,7 +177,7 @@ def decodeVNT(filename)
   if (orgFilename == "" || image == "" || orgExt == "" || isBody)
   	return false
   end
-  postImage(orgFilename, image, orgFilename, orgExt)
+  postImage(orgFilename, image, orgFilename, orgExt.tr('A-Z', 'a-z'))
 end
 
 CSIDL_LOCAL_APPDATA = 0x001c
